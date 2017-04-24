@@ -122,12 +122,18 @@ namespace Tellurium.MvcPages.SeleniumUtils
             ", element);
         }
 
-        internal static void ScrollIntoView(this RemoteWebDriver driver, IWebElement element)
+        internal static void ScrollIntoViewIfNotVisible(this RemoteWebDriver driver, IWebElement element)
         {
             driver.ExecuteScript(@"
-                    if(typeof arguments[0].scrollIntoView == 'function'){
-                        arguments[0].scrollIntoView();
-                    }
+                    (function(element){
+                    if(typeof element.scrollIntoView == 'function'){
+                        var rec = element.getBoundingClientRect();
+                        var elementAtCenter = document.elementFromPoint(rec.left+rec.width/2, rec.top+rec.height/2);
+                        if(element != elementAtCenter && element.contains(elementAtCenter) == false)
+                        {
+                            element.scrollIntoView();
+                        }
+                    }})(arguments[0]);
             ", element);
         }
 
@@ -276,6 +282,7 @@ namespace Tellurium.MvcPages.SeleniumUtils
         {
             try
             {
+                driver.ScrollIntoViewIfNotVisible(expectedElement);
                 expectedElement.Click();
             }
             catch (Exception ex)
@@ -293,7 +300,7 @@ namespace Tellurium.MvcPages.SeleniumUtils
                     driver.ScrollToY(expectedElement.Location.Y + expectedElement.Size.Height);
                     Thread.Sleep(500);
                 }
-                driver.ScrollIntoView(expectedElement);
+                driver.ScrollIntoViewIfNotVisible(expectedElement);
                 driver.WaitUntil(SearchElementDefaultTimeout, (d) => driver.IsElementClickable(expectedElement));
                 expectedElement.Click();
                 if (originalScrollPosition != null)
