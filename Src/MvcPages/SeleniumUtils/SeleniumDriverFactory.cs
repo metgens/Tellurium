@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
@@ -28,8 +29,12 @@ namespace Tellurium.MvcPages.SeleniumUtils
             switch (driverType)
             {
                 case BrowserType.Firefox:
-                    var profile = new FirefoxProfile {DeleteAfterUse = true};
-                    return new FirefoxDriver(profile);
+                    var firefoxOptions = new FirefoxOptions
+                    {
+                        Profile = new FirefoxProfile {DeleteAfterUse = true},
+                    };
+                    var firefoxService = FirefoxDriverService.CreateDefaultService(driversPath);
+                    return new FirefoxDriver(firefoxService, firefoxOptions, TimeSpan.FromSeconds(60.0));
                 case BrowserType.Chrome:
                     return new ChromeDriver(driversPath);
                 case BrowserType.InternetExplorer:
@@ -37,7 +42,9 @@ namespace Tellurium.MvcPages.SeleniumUtils
                 case BrowserType.Opera:
                     return new OperaDriver(driversPath);
                 case BrowserType.Safari:
-                    return new SafariDriver(new SafariOptions() { SafariLocation = driversPath });
+
+                    var safariDriverService = SafariDriverService.CreateDefaultService(driversPath);
+                    return new SafariDriver(safariDriverService);
                 case BrowserType.Phantom:
                     return new PhantomJSDriver(driversPath);
                 case BrowserType.Edge:

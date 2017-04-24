@@ -96,7 +96,9 @@ namespace Tellurium.MvcPages.WebPages
         public IReadOnlyCollection<string> GetAllRequestedEndpoints()
         {
             CollectRequestedEndpointsData();
-            return this.requestedEndpoints.Select(x=> MvcEndpointsHelper.NormalizeEndpointAddress(new Uri(x).LocalPath)).ToArray();
+            return this.requestedEndpoints.Where(x=>x.StartsWith("http"))
+                .Select(x=> MvcEndpointsHelper.NormalizeEndpointAddress(new Uri(x).LocalPath))
+                .ToArray();
         }
     }
        
