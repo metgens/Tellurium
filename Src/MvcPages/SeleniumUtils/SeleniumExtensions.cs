@@ -122,6 +122,16 @@ namespace Tellurium.MvcPages.SeleniumUtils
             ", element);
         }
 
+        internal static void ScrollIntoView(this RemoteWebDriver driver, IWebElement element)
+        {
+            driver.ExecuteScript(@"
+                    if(typeof arguments[0].scrollIntoView == 'function'){
+                        arguments[0].scrollIntoView();
+                    }
+            ", element);
+        }
+
+
         public static int GetPageHeight(this RemoteWebDriver driver)
         {
             var scriptResult = driver.ExecuteScript("return Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);");
@@ -283,6 +293,7 @@ namespace Tellurium.MvcPages.SeleniumUtils
                     driver.ScrollToY(expectedElement.Location.Y + expectedElement.Size.Height);
                     Thread.Sleep(500);
                 }
+                driver.ScrollIntoView(expectedElement);
                 driver.WaitUntil(SearchElementDefaultTimeout, (d) => driver.IsElementClickable(expectedElement));
                 expectedElement.Click();
                 if (originalScrollPosition != null)
