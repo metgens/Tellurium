@@ -96,7 +96,7 @@ namespace Tellurium.Sample.UITests
         {
             //Initialize MvcPages
             var browserAdapterConfig = BrowserAdapterConfig.FromAppConfig(TestContext.CurrentContext.TestDirectory);
-            browserAdapterConfig.BrowserType = BrowserType.ChromeExtended;
+            browserAdapterConfig.BrowserType = BrowserType.Edge;
             browserAdapterConfig.BrowserCameraConfig = new BrowserCameraConfig
             {
                 LensType = LensType.ChromeFullPage

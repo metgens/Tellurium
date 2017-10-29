@@ -59,7 +59,7 @@ namespace Tellurium.MvcPages.SeleniumUtils
                 case BrowserType.Phantom:
                     return new PhantomJSDriver(driversPath);
                 case BrowserType.Edge:
-                    return new EdgeDriver(driversPath);
+                    return new EdgeDriverExtended(driversPath);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(driverType), driverType, null);
             }

@@ -115,6 +115,7 @@
     <Compile Include="SeleniumUtils\SeleniumFinderExtensions.cs" />
     <Compile Include="SeleniumUtils\StableWebElement.cs" />
     <Compile Include="SeleniumUtils\WebDrivers\ChromeDriverExtended.cs" />
+    <Compile Include="SeleniumUtils\WebDrivers\EdgeDriverExtended.cs" />
     <Compile Include="SeleniumUtils\WebElementNotFoundException.cs" />
     <Compile Include="Utils\ExceptionHelper.cs" />
     <Compile Include="SeleniumUtils\SeleniumDriverFactory.cs" />

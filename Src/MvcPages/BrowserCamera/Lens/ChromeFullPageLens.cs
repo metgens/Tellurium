@@ -7,11 +7,11 @@ namespace Tellurium.MvcPages.BrowserCamera.Lens
 {
     public class ChromeFullPageLens : IBrowserCameraLens
     {
-        private readonly ChromeDriverExtended driver;
+        private readonly EdgeDriverExtended driver;
 
         public ChromeFullPageLens(RemoteWebDriver driver)
         {
-            this.driver = driver as ChromeDriverExtended ?? throw new Exception("ChromeFullPageLens works only with BrowserType: ChromeDriverExtended");
+            this.driver = driver as EdgeDriverExtended ?? throw new Exception("ChromeFullPageLens works only with BrowserType: ChromeDriverExtended");
         }
 
         public byte[] TakeScreenshot()
